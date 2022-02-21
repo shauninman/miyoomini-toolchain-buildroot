@@ -1,0 +1,17 @@
+this repo downloads and configures buildroot to build libraries for the miyoomini toolchain
+
+just cd into ~/buildroot and run make sdk (or make menuconfig to add additional libraries)
+
+then you can copy out individual binaries, libraries, and headers from buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/
+or return to ~ and run ./package-toolchain.sh to generate ~/workspace/miyoomini-toolchain.tar.xz
+
+eg.
+
+	make shell
+	cd ~/buildroot
+	make sdk
+	cd ~
+	./package-toolchain.sh
+	exit
+
+find miyoomini-toolchain.tar.xz in the workspace folder

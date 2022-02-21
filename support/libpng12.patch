@@ -1,0 +1,50 @@
+diff -pruN buildroot.ori/package/Config.in buildroot/package/Config.in
+--- buildroot.ori/package/Config.in	2015-01-09 15:52:22.000000000 -0600
++++ buildroot/package/Config.in	2015-01-11 12:38:37.399803185 -0600
+@@ -681,6 +681,7 @@ menu "Graphics"
+ 	source "package/libgtk2/Config.in"
+ 	source "package/libgtk3/Config.in"
+ 	source "package/libpng/Config.in"
++	source "package/libpng12/Config.in"
+ 	source "package/libqrencode/Config.in"
+ 	source "package/libraw/Config.in"
+ 	source "package/librsvg/Config.in"
+diff -pruN buildroot.ori/package/libpng12/Config.in buildroot/package/libpng12/Config.in
+--- buildroot.ori/package/libpng12/Config.in	1969-12-31 18:00:00.000000000 -0600
++++ buildroot/package/libpng12/Config.in	2015-01-11 12:28:26.115791459 -0600
+@@ -0,0 +1,12 @@
++config BR2_PACKAGE_LIBPNG12
++	bool "libpng12"
++	select BR2_PACKAGE_ZLIB
++	help
++	  Some programs still link using the legacy -lpng12 version
++	  of libpng for handling PNG (Portable Network Graphics)
++	  images. It is still maintained for security fixes so
++	  make it available, but do not select this unless you
++	  have an application that explicitly needs the older
++	  libpng12 functionality. Use libpng instead.
++
++	  http://www.libpng.org/
+diff -pruN buildroot.ori/package/libpng12/libpng.mk buildroot/package/libpng12/libpng.mk
+--- buildroot.ori/package/libpng12/libpng.mk	1969-12-31 18:00:00.000000000 -0600
++++ buildroot/package/libpng12/libpng.mk	2015-01-11 12:33:28.495797259 -0600
+@@ -0,0 +1,19 @@
++################################################################################
++#
++# libpng12
++#
++################################################################################
++
++LIBPNG12_VERSION = 1.2.56
++LIBPNG12_SERIES = 12
++LIBPNG12_SOURCE = libpng-$(LIBPNG12_VERSION).tar.xz
++LIBPNG12_SITE = http://downloads.sourceforge.net/project/libpng/libpng${LIBPNG12_SERIES}/older-releases/$(LIBPNG12_VERSION)
++LIBPNG12_LICENSE = libpng license
++LIBPNG12_LICENSE_FILES = LICENSE
++LIBPNG12_INSTALL_STAGING = YES
++LIBPNG12_DEPENDENCIES = host-pkgconf zlib
++LIBPNG12_CONFIG_SCRIPTS = libpng$(LIBPNG12_SERIES)-config libpng-config
++LIBPNG12_CONF_OPTS = $(if $(BR2_ARM_CPU_HAS_NEON),--enable-arm-neon=yes,--enable-arm-neon=no)
++
++$(eval $(autotools-package))
++$(eval $(host-autotools-package))
