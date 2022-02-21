@@ -27,8 +27,8 @@ cd ~
 if [ ! -d "./my283" ]; then
 	tar xf my283.tar.xz
 fi
+rsync -a /root/my283/ ./miyoomini-toolchain/arm-linux-gnueabihf/sysroot/
 rsync -a --ignore-existing /root/buildroot/output/host/arm-buildroot-linux-gnueabihf/sysroot/ ./miyoomini-toolchain/arm-linux-gnueabihf/sysroot/
-rsync -a --ignore-existing /root/my283/ ./miyoomini-toolchain/arm-linux-gnueabihf/sysroot/
 find ./miyoomini-toolchain -type f -name ".*" -delete
 
 # NOTE: xz takes forever but produces a toolchain half the size of gzip
