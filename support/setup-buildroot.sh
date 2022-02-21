@@ -10,8 +10,3 @@ mv ./$BUILDROOT_VERSION ./buildroot
 cd ./buildroot
 patch -p1 < ../libpng12.patch
 cp ~/miyoomini.config ./.config
-
-export FORCE_UNSAFE_CONFIGURE=1
-
-# this should be done manually I think
-# make sdk
